@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Pk2Mixer.App.Views.PreviewPaneView">
+  <Border BorderThickness="1" BorderBrush="#333333" CornerRadius="4" Padding="8">
+    <DockPanel>
+      <StackPanel DockPanel.Dock="Top" Spacing="2">
+        <TextBlock Text="Preview" FontWeight="SemiBold" FontSize="15" />
+        <TextBlock Text="{Binding Title}" FontSize="12" TextTrimming="CharacterEllipsis"
+                   ToolTip.Tip="{Binding Title}" />
+        <TextBlock Text="{Binding Details}" FontSize="11" Opacity="0.7" TextWrapping="Wrap" />
+      </StackPanel>
+
+      <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="6" Margin="0,8,0,8"
+                  IsVisible="{Binding ShowImbControls}">
+        <TextBlock Text="group" VerticalAlignment="Center" FontSize="12" />
+        <ComboBox x:Name="GroupBox" Width="96" ItemsSource="{Binding GroupNumbers}"
+                  SelectedIndex="{Binding GroupIndex, Mode=TwoWay}"
+                  SelectionChanged="Group_SelectionChanged" />
+        <CheckBox Content="sheet" IsChecked="{Binding Sheet, Mode=TwoWay}" Click="Sheet_Click" />
+        <Button Content="Export PNG…" Click="ExportPng_Click" />
+      </StackPanel>
+
+      <Border Background="#191919" CornerRadius="3" ClipToBounds="True">
+        <Grid>
+          <Image Source="{Binding Image}" Stretch="Uniform" StretchDirection="Both"
+                 Margin="4" IsVisible="{Binding HasImage}" />
+          <TextBlock Text="{Binding Error}" IsVisible="{Binding HasError}" TextWrapping="Wrap"
+                     Foreground="#ff7b72" Margin="12" />
+          <ScrollViewer IsVisible="{Binding HasText}">
+            <TextBox Text="{Binding Text, Mode=OneWay}" IsReadOnly="True" AcceptsReturn="True"
+                     FontFamily="Consolas,Menlo,DejaVu Sans Mono,monospace" FontSize="11"
+                     TextWrapping="NoWrap" Background="Transparent" BorderThickness="0" />
+          </ScrollViewer>
+          <ListBox ItemsSource="{Binding LngLines}" IsVisible="{Binding HasLng}"
+                   Background="Transparent">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Grid ColumnDefinitions="64,*">
+                  <TextBlock Text="{Binding Id}" FontFamily="Consolas,Menlo,monospace"
+                             Foreground="#7ecbff" FontSize="11" />
+                  <TextBlock Grid.Column="1" Text="{Binding Text}" TextWrapping="Wrap" FontSize="12" />
+                </Grid>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </Grid>
+      </Border>
+    </DockPanel>
+  </Border>
+</UserControl>

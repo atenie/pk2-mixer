@@ -1,0 +1,109 @@
+name: dist
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version string (defaults to Directory.Build.props)
+        required: false
+        type: string
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dist-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    name: Windows portable
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build portable Windows zip
+        shell: pwsh
+        run: ./tools/dist.ps1 -Targets windows -Version '${{ inputs.version }}'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-portable
+          path: dist/win-x64/*.zip
+          if-no-files-found: error
+
+  linux:
+    name: Linux AppImage + tarball
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build Linux artifacts
+        shell: pwsh
+        run: ./tools/dist.ps1 -Targets linux -Version '${{ inputs.version }}'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: |
+            dist/linux-x64/*.AppImage
+            dist/linux-x64/*.tar.gz
+          if-no-files-found: error
+
+  macos:
+    name: macOS .app / .dmg
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build macOS bundles (arm64 + x64)
+        shell: pwsh
+        run: ./tools/dist.ps1 -Targets macos -Version '${{ inputs.version }}'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: |
+            dist/osx-arm64/*.zip
+            dist/osx-arm64/*.dmg
+            dist/osx-x64/*.zip
+            dist/osx-x64/*.dmg
+          if-no-files-found: error
+
+  release:
+    name: Attach artifacts to release
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [windows, linux, macos]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Checksums
+        run: |
+          cd dist
+          sha256sum * > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          fail_on_unmatched_files: true
+          generate_release_notes: true

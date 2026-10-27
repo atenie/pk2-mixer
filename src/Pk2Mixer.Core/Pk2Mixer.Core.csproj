@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Pk2Mixer.Core</RootNamespace>
+    <AssemblyName>Pk2Mixer.Core</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- hash -> file name catalogue generated from railroad-tycoon-2-decomp/rt2/spec/07-asset-names.md -->
+    <EmbeddedResource Include="Resources\asset-names.txt" />
+  </ItemGroup>
+
+</Project>

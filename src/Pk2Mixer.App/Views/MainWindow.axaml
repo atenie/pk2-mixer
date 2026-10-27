@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="using:Pk2Mixer.App.Views"
+        x:Class="Pk2Mixer.App.Views.MainWindow"
+        Title="pk2-mixer — Railroad Tycoon II archive manager"
+        Icon="/Assets/pk2-mixer.png"
+        Width="1480" Height="880"
+        MinWidth="980" MinHeight="600"
+        WindowStartupLocation="CenterScreen">
+  <DockPanel>
+    <Menu DockPanel.Dock="Top" Background="#181818">
+      <MenuItem Header="_File">
+        <MenuItem Header="_New .PK2…" Click="New_Click" />
+        <MenuItem Header="_Open .PK2…" Click="Open_Click" />
+        <MenuItem Header="_Find Railroad Tycoon II archives" Click="Find_Click" />
+        <MenuItem x:Name="FoundMenu" Header="_Found" />
+        <Separator />
+        <MenuItem Header="_Save active archive" Click="SaveActive_Click" />
+        <Separator />
+        <MenuItem Header="E_xit" Click="Exit_Click" />
+      </MenuItem>
+      <MenuItem Header="_View">
+        <MenuItem Header="_Palette">
+          <MenuItem Header="_Load all .DAT and .FLAT palettes…" Click="PaletteLoad_Click" />
+          <MenuItem Header="_Select…" Click="PaletteSelect_Click" />
+          <MenuItem Header="_Use each bank's own PALT" Click="PaletteUseBank_Click" />
+        </MenuItem>
+      </MenuItem>
+    </Menu>
+
+    <Border DockPanel.Dock="Top" Background="#141414" Padding="10,6">
+      <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+        <Button Content="New .PK2" Click="New_Click" Margin="0,0,6,0" />
+        <Button Grid.Column="1" Content="Open .PK2" Click="Open_Click" Margin="0,0,6,0" />
+        <Button Grid.Column="2" Content="Find archives" Click="Find_Click" />
+        <TextBlock Grid.Column="4" Text="{Binding PaletteStatus}" Opacity="0.7"
+                   VerticalAlignment="Center" />
+      </Grid>
+    </Border>
+
+    <Border DockPanel.Dock="Bottom" Background="#141414" Padding="10,6">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Text="{Binding Status}" FontSize="12" VerticalAlignment="Center"
+                   TextTrimming="CharacterEllipsis" />
+        <ProgressBar Grid.Column="1" Width="140" Height="6" IsIndeterminate="True"
+                     IsVisible="{Binding IsBusy}" Margin="12,0,0,0" VerticalAlignment="Center" />
+      </Grid>
+    </Border>
+
+    <Grid ColumnDefinitions="*,6,*,6,440" Margin="8">
+      <views:ExplorerPaneView x:Name="LeftPane" Grid.Column="0" DataContext="{Binding Left}" />
+      <GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="#2f2f2f" />
+      <views:ExplorerPaneView x:Name="RightPane" Grid.Column="2" DataContext="{Binding Right}" />
+      <GridSplitter Grid.Column="3" ResizeDirection="Columns" Background="#2f2f2f" />
+      <views:PreviewPaneView x:Name="PreviewPane" Grid.Column="4"
+                             DataContext="{Binding Preview}" />
+    </Grid>
+  </DockPanel>
+</Window>

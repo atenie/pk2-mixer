@@ -1,0 +1,23 @@
+# build output
+bin/
+obj/
+build/
+dist/
+*.user
+*.suo
+
+# editor / OS noise
+.vs/
+.idea/
+.DS_Store
+Thumbs.db
+
+# local scratch
+scratch/
+*.log
+tests-*.txt
+*-run.txt
+*-check.txt
+dist-*.txt
+wsl-alive.txt
+tools/smoke*.txt

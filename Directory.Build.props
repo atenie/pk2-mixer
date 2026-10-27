@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+
+    <!-- release metadata (also used by tools/dist.ps1) -->
+    <Version>0.1.0</Version>
+    <Product>pk2-mixer</Product>
+    <Description>Railroad Tycoon II PK2 archive manager</Description>
+    <Authors>pk2-mixer contributors</Authors>
+    <Copyright>Clean-room tooling for Railroad Tycoon II interoperability</Copyright>
+  </PropertyGroup>
+</Project>

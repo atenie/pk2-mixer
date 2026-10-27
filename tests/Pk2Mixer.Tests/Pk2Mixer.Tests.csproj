@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Pk2Mixer.Tests</RootNamespace>
+    <AssemblyName>Pk2Mixer.Tests</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Pk2Mixer.Core\Pk2Mixer.Core.csproj" />
+  </ItemGroup>
+
+</Project>

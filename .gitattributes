@@ -1,0 +1,5 @@
+# Keep shell helpers LF so they run natively on Linux/macOS and in WSL.
+*.sh text eol=lf
+
+# PowerShell scripts are ASCII (Windows PowerShell 5.1 reads BOM-less files as ANSI)
+*.ps1 text eol=crlf

@@ -1,0 +1,28 @@
+pk2-mixer — third-party notices
+================================
+
+pk2-mixer itself is clean-room source code. The self-contained distribution
+binaries bundle the following third-party components:
+
+* .NET runtime 8 (Microsoft) — MIT License
+  https://github.com/dotnet/runtime/blob/main/LICENSE.TXT
+
+* Avalonia UI (AvaloniaUI OÜ and contributors) — MIT License
+  https://github.com/AvaloniaUI/Avalonia/blob/master/licence.md
+  including Avalonia.Controls.DataGrid and Avalonia.Fonts.Inter
+
+* SkiaSharp (Microsoft / Mono Project) — MIT License
+  https://github.com/mono/SkiaSharp/blob/main/LICENSE.md
+
+* HarfBuzzSharp (Microsoft / Mono Project) — MIT License
+  https://github.com/mono/SkiaSharp/blob/main/LICENSE.md
+
+* Inter typeface (Rasmus Andersson) — SIL Open Font License 1.1
+  https://github.com/rsms/inter/blob/master/LICENSE.txt
+
+The AppImage and macOS application bundles add the respective AppImage runtime
+and the ad-hoc macOS signature only; no other third-party code is included.
+
+Railroad Tycoon II game data, code and trademarks are not part of these
+packages. pk2-mixer is an interoperability/preservation tool and ships no game
+assets.

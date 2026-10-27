@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Pk2Mixer.App.Views.ExplorerPaneView">
+  <Border BorderThickness="2" BorderBrush="Transparent" CornerRadius="4" Padding="8"
+          Classes.active="{Binding IsActive}">
+    <Border.Styles>
+      <Style Selector="Border.active">
+        <Setter Property="BorderBrush" Value="#3d7edb" />
+      </Style>
+    </Border.Styles>
+
+    <DockPanel>
+      <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
+        <StackPanel Spacing="2">
+          <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="15" />
+          <TextBlock Text="{Binding PathLabel}" FontSize="11" Opacity="0.6"
+                     TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding PathLabel}" />
+        </StackPanel>
+        <TextBlock Grid.Column="1" Text="{Binding Summary}" FontSize="11" Opacity="0.6"
+                   VerticalAlignment="Center" Margin="8,0,0,0" />
+      </Grid>
+
+      <WrapPanel DockPanel.Dock="Top" Margin="0,8,0,6">
+        <Button Content="Open archive…" Click="OpenArchive_Click" Margin="0,0,6,6" />
+        <Button Content="Open folder…" Click="OpenFolder_Click" Margin="0,0,6,6" />
+        <Button Content="Up" Click="Up_Click" IsEnabled="{Binding CanGoUp}" Margin="0,0,6,6" />
+        <Button Content="Save" Click="Save_Click" IsEnabled="{Binding IsDirty}" Margin="0,0,6,6" />
+        <Button Content="Import…" Click="Import_Click" IsEnabled="{Binding HasLocation}" Margin="0,0,6,6" />
+        <Button Content="{Binding CopyLabel}" Click="Copy_Click"
+                IsEnabled="{Binding HasSelection}" Margin="0,0,6,6" />
+        <Button Content="{Binding CopyPngLabel}" Click="CopyPng_Click"
+                IsEnabled="{Binding HasSelection}" Margin="0,0,6,6"
+                ToolTip.Tip="Copy the selected .IMB as an extracted PNG contact sheet" />
+      </WrapPanel>
+
+      <DataGrid x:Name="ItemsGrid"
+                ItemsSource="{Binding Items}"
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                CanUserResizeColumns="True"
+                CanUserSortColumns="True"
+                CanUserReorderColumns="True"
+                GridLinesVisibility="Horizontal"
+                HeadersVisibility="Column"
+                SelectionMode="Single"
+                RowHeight="24"
+                DoubleTapped="ItemsGrid_DoubleTapped"
+                PointerPressed="ItemsGrid_PointerPressed">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="name" Binding="{Binding Name}" Width="*" />
+          <DataGridTextColumn Header="filetype" Binding="{Binding TypeLabel}" Width="90" />
+          <DataGridTemplateColumn Header="size (bytes)" SortMemberPath="Size" Width="110">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding SizeText}" HorizontalAlignment="Right"
+                           FontFamily="Consolas,Menlo,DejaVu Sans Mono,monospace"
+                           Margin="0,0,6,0" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+    </DockPanel>
+  </Border>
+</UserControl>
